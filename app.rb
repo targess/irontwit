@@ -6,7 +6,11 @@ require_relative 'lib/twit.rb'
 require_relative 'lib/user.rb'
 
 @@users = [User.new("jake", "12345"), User.new("pepe", "12345")]
-@@twits = [Twit.new("Solo lechugas #vegetariano", "jake"), Twit.new("Solo tomate #vegetariano", "jake")]
+@@twits = [Twit.new("Solo lechugas #vegetariano http://lasdeliciassl.com/37-home_default/lechugas.jpg", "jake"), 
+	Twit.new("Solo tomate #vegetariano http://www.lacestaroja.es/89-home_default/tomate-extra.jpg", "jake"),
+	Twit.new("Tengo un tractor amarillo", "pepe"),
+	Twit.new("Tengo un tractor amarillo http://www.example.com/image.jpg", "pepe"),
+	Twit.new("hola caracola", "pepe") ]
 
 enable(:sessions)
 

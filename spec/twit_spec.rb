@@ -20,17 +20,17 @@ RSpec.describe Twit do
  
     it "returns the first image from root url" do
     twit = Twit.new("message http://example.com/image.jpg")
-    expect(twit.get_image).to eq("image.jpg")
+    expect(twit.get_image_name).to eq("image.jpg")
     end
 
     it "returns the first image from url with directories" do
     twit = Twit.new("message http://example.com/directory/directory2/image.png")
-    expect(twit.get_image).to eq("image.png")
+    expect(twit.get_image_name).to eq("image.png")
     end    
 
     it "has no image" do
     twit = Twit.new("message image.jpg")
-    expect(twit.get_image).to eq(nil)
+    expect(twit.get_image_name).to eq(nil)
     end
   end
   

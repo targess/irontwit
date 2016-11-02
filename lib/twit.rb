@@ -1,12 +1,31 @@
+require 'open-uri'
+
 class Twit
-  attr_accessor :favs, :user
-  attr_reader :msg, :start_date, :end_date, :user
+  attr_accessor :favs
+  attr_reader :msg, :start_date, :end_date, :user, :image
   def initialize(msg, user = nil, start_date = nil, end_date = nil)
     @start_date = start_date || Date.today - 1
-    @end_date = end_date || Date.today + 1
+    @end_date = end_date || Date.today + 10
     @msg = msg
     @favs = 0
     @user = user
+
+    image_url = get_image_url
+    image_name = get_image_name
+
+    if image_url != ""
+      begin
+        download = open(image_url)
+        IO.copy_stream(download, "public/#{get_image_name}")
+        rescue OpenURI::HTTPError
+          @image = nil
+          @msg.gsub!(image_url,'INVALID URL')
+        else
+          @image = image_name
+        end   
+    else 
+       @image = nil
+    end
   end
 
   def popular?
@@ -14,13 +33,13 @@ class Twit
   end
 
   def get_image_url
-    @msg.match(/http:\/\/(\w+).(\w{2,3})\/((\w+)\/)*(\w+.(jpg|png))/).to_s
+    @msg.match(/http:\/\/((\w|\W)+).(\w{2,3})\/(((\w|\W)+)\/)*((\w|\W)+.(jpg|png))/).to_s
   end
 
-  def get_image
+  def get_image_name
     image_url = get_image_url
     return if image_url == ""
-    image_url.match(/(\w+.(jpg|png))/).to_s
+    image_url.match(/((\w|\W)+.(jpg|png))/).to_s
   end
   
   def status

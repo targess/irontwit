@@ -2,6 +2,13 @@
 
 <ul>
 	<% @twits_to_print.each do |twit| %>
-  		<li><%= twit.msg %> <strong>by @<%= twit.user %></strong></li>
+  		<li>
+  			<%= twit.msg %> <strong>by @<%= twit.user %></strong>
+  			<% if twit.image %>
+  			<img src="<%= twit.image %>" style="width:100px;height:100px;">
+  			<% end %>
+
+
+  		</li>
 	<% end %>
 </ul>
