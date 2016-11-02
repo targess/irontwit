@@ -39,7 +39,7 @@ class Twit
   def get_image_name
     image_url = get_image_url
     return if image_url == ""
-    image_url.match(/((\w|\W)+.(jpg|png))/).to_s
+    image_url.match(/((\w|-)+.(jpg|png))/).to_s
   end
   
   def status
