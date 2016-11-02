@@ -42,6 +42,11 @@ get '/profile' do
 	erb(:profile)
 end
 
+get '/timeline' do
+	@twits_to_print = @@twits
+	erb(:timeline)
+end
+
 get '/logout' do
 	session[:logged_in] = false
 	redirect to("/")

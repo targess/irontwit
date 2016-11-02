@@ -1,0 +1,7 @@
+<h1>Timeline</h1>
+
+<ul>
+	<% @twits_to_print.each do |twit| %>
+  		<li><%= twit.msg %> <strong>by @<%= twit.user %></strong></li>
+	<% end %>
+</ul>
