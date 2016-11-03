@@ -13,18 +13,16 @@ class Twit
     image_url = get_image_url
     image_name = get_image_name
 
-    if image_url != ""
-      begin
-        download = open(image_url)
-        IO.copy_stream(download, "public/#{get_image_name}")
-        rescue OpenURI::HTTPError
-          @image = nil
-          @msg.gsub!(image_url,'INVALID URL')
-        else
-          @image = image_name
-        end   
-    else 
-       @image = nil
+    @image = nil && return if image_url == ""
+    
+    begin
+      download = open(image_url)
+      IO.copy_stream(download, "public/#{image_name}")
+    rescue OpenURI::HTTPError
+      @image = nil
+      @msg.gsub!(image_url,'INVALID URL')
+    else
+      @image = image_name
     end
   end
 
@@ -37,9 +35,7 @@ class Twit
   end
 
   def get_image_name
-    image_url = get_image_url
-    return if image_url == ""
-    image_url.match(/((\w|-)+.(jpg|png))/).to_s
+    get_image_url.match(/((\w|-)+.(jpg|png))/).to_s
   end
   
   def status
