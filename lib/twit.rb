@@ -33,7 +33,7 @@ class Twit
   end
 
   def get_image_url
-    @msg.match(/http:\/\/((\w|\W)+).(\w{2,3})\/(((\w|\W)+)\/)*((\w|\W)+.(jpg|png))/).to_s
+    @msg.match(/http(|s):\/\/((\w|\W)+).(\w{2,3})\/(((\w|\W)+)\/)*((\w|\W)+.(jpg|png))/).to_s
   end
 
   def get_image_name

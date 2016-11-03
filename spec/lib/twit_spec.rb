@@ -18,19 +18,19 @@ RSpec.describe Twit do
 
   describe "has a image" do
  
-    it "returns the first image from root url" do
+    it "returns no images in case invalid url" do
     twit = Twit.new("message http://example.com/image.jpg")
-    expect(twit.get_image_name).to eq("image.jpg")
+    expect(twit.image).to be(nil)
     end
 
-    it "returns the first image from url with directories" do
-    twit = Twit.new("message http://example.com/directory/directory2/image.png")
-    expect(twit.get_image_name).to eq("image.png")
+    it "returns the first image from url" do
+    twit = Twit.new("message https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png")
+    expect(twit.image).to eq("Wikipedia-logo-v2.png")
     end    
 
     it "has no image" do
     twit = Twit.new("message image.jpg")
-    expect(twit.get_image_name).to eq(nil)
+    expect(twit.image).to eq(nil)
     end
   end
   
@@ -38,14 +38,14 @@ RSpec.describe Twit do
     it "is visible when date is between start and end" do
       start_date = Date.today - 1
       end_date = Date.today + 1
-      twit = Twit.new("message", start_date, end_date)
+      twit = Twit.new("message", "pepe", start_date, end_date)
       expect(twit.status).to eq("visible")
     end
     
     it "is invisible when date is not between start and end" do
       start_date = Date.today + 1
       end_date = Date.today + 10
-      twit = Twit.new("message", start_date, end_date)
+      twit = Twit.new("message", "pepe", start_date, end_date)
       expect(twit.status).to eq("invisible")
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe Twit do
 
     it "Is valid under 140 and excludes images from count" do
       str = "*" * 139
-      str.concat("http://example.com/directory/directory2/image.png")
+      str.concat("https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png")
       twit = Twit.new(str)
       expect(twit.valid?).to eq(true)
     end
